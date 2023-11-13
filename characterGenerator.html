@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Character Counter</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    #input {
+      width: 500px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <textarea id="input" placeholder="Paste your text here"></textarea>
+  <p>Character Count: <span id="count">0</span></p>
+  <button id="generateBtn">Generate</button>
+  
+  <script>
+    $(document).ready(function() {
+      $('#input').on('input', function() {
+        var inputText = $(this).val();
+        var currentCount = inputText.length;
+        
+        $('#count').text(currentCount);
+        
+        if (currentCount > 1000000) {
+          $(this).val(inputText.substring(0, 1000000));
+          $('#count').text(1000000);
+        }
+      });
+      
+      $('#generateBtn').on('click', function() {
+        var inputText = $('#input').val();
+        var currentCount = inputText.length;
+        
+        if (currentCount < 1000000) {
+          var remainingCount = 1000000 - currentCount;
+          var randomString = generateRandomString(remainingCount);
+          $('#input').val(inputText + randomString);
+          $('#count').text(1000000);
+        }
+      });
+      
+      function generateRandomString(length) {
+        var result = '';
+        var characters = '0123456789';
+        var charactersLength = characters.length;
+        
+        for (var i = 0; i < length; i++) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        
+        return result;
+      }
+    });
+  </script>
+</body>
+</html>
